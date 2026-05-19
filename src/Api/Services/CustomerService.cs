@@ -1,4 +1,6 @@
 using System;
+using api.Dto;
+using api.Helpers;
 using api.Models;
 using Microsoft.Azure.Cosmos;
 
@@ -7,25 +9,17 @@ namespace api.Services;
 public class CustomerService
 {
     private readonly Container _container;
+    private readonly CustomerQueryHelper _queryHelper;
 
-    public CustomerService(CosmosService cosmos)
+    public CustomerService(CosmosService cosmos, CustomerQueryHelper queryHelper)
     {
         _container = cosmos.GetContainer("customers");
+        _queryHelper = queryHelper;
     }
 
-    public async Task<IEnumerable<Customer>> GetAll()
+    public async Task<IEnumerable<Customer>> GetAll(CustomerQueryParams queryParams)
     {
-        var query = _container.GetItemQueryIterator<Customer>();
-
-        var results = new List<Customer>();
-
-        while (query.HasMoreResults)
-        {
-            var response = await query.ReadNextAsync();
-            results.AddRange(response);
-        }
-
-        return results;
+        return await _queryHelper.ExecuteQuery(_container, queryParams);
     }
 
     public async Task<Customer?> GetById(string vendorId, string id)
@@ -34,7 +28,7 @@ public class CustomerService
         {
             var response = await _container.ReadItemAsync<Customer>(
                 id,
-           new PartitionKey(vendorId)
+                new PartitionKey(vendorId)
             );
 
             return response.Resource;

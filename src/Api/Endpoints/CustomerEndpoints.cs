@@ -1,6 +1,7 @@
 using System;
 using api.Services;
 using api.Models;
+using api.Dto;
 
 namespace api.Endpoints;
 
@@ -10,8 +11,11 @@ public static class CustomerEndpoints
     {
         var customerGroup = app.MapGroup("/api/customer");
 
-        customerGroup.MapGet("", async (CustomerService service) =>
-            Results.Ok(await service.GetAll()));
+        customerGroup.MapGet("", async (CustomerService service, [AsParameters] CustomerQueryParams queryParams) =>
+        {
+            var customers = await service.GetAll(queryParams);
+            return Results.Ok(customers);
+        });
 
         customerGroup.MapGet("{vendorId}/{id}", async (CustomerService service, string vendorId, string id) =>
         {
