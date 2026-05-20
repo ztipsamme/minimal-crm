@@ -28,6 +28,9 @@ namespace api.Helpers
             if (!string.IsNullOrEmpty(queryParams.Title))
                 filters.Add("CONTAINS(c.title, @title)");
 
+            if (!string.IsNullOrEmpty(queryParams.VendorId))
+                filters.Add("CONTAINS(c.vendorId, @vendorId)");
+
             if (filters.Any())
                 sql += " WHERE " + string.Join(" AND ", filters);
 
@@ -40,6 +43,9 @@ namespace api.Helpers
 
             if (!string.IsNullOrEmpty(queryParams.Title))
                 query = query.WithParameter("@title", queryParams.Title);
+
+            if (!string.IsNullOrEmpty(queryParams.VendorId))
+                query = query.WithParameter("@vendorId", queryParams.VendorId);
 
             return query;
         }
