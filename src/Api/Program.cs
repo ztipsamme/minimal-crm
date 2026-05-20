@@ -1,6 +1,6 @@
-using api.Endpoints;
-using api.Helpers;
-using api.Services;
+using Api.Endpoints;
+using Api.Helpers;
+using Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

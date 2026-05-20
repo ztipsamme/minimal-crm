@@ -2,7 +2,7 @@ using System;
 using System.Reflection;
 using Microsoft.Azure.Cosmos;
 
-namespace api.Helpers
+namespace Api.Helpers
 {
     public static class PatchBuilder
     {

@@ -1,10 +1,10 @@
 using System;
-using api.Dto;
-using api.Helpers;
-using api.Models;
+using Api.Dto;
+using Api.Helpers;
+using Domain.Models;
 using Microsoft.Azure.Cosmos;
 
-namespace api.Services;
+namespace Api.Services;
 
 public class CustomerService
 {

@@ -1,15 +1,15 @@
 using System;
-using api.Services;
-using api.Models;
-using api.Dto;
+using Api.Services;
+using Api.Dto;
+using Domain.Models;
 
-namespace api.Endpoints;
+namespace Api.Endpoints;
 
 public static class CustomerEndpoints
 {
     public static void MapCustomerEndpoints(this WebApplication app)
     {
-        var customerGroup = app.MapGroup("/api/customer");
+        var customerGroup = app.MapGroup("/Api/customer");
 
         customerGroup.MapGet("", async (CustomerService service, [AsParameters] CustomerQueryParams queryParams) =>
         {
@@ -47,6 +47,5 @@ public static class CustomerEndpoints
             var deleted = await service.Delete(vendorId, id);
             return deleted ? Results.NoContent() : Results.NotFound();
         });
-
     }
 }

@@ -482,3 +482,4 @@ $RECYCLE.BIN/
 *.swp
 
 .DS_Store
+local.settings.json

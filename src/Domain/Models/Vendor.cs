@@ -1,6 +1,6 @@
 using System;
 
-namespace api.Models;
+namespace Domain.Models;
 
 public class Vendor : User
 {

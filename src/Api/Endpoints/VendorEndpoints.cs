@@ -1,14 +1,14 @@
 using System;
-using api.Services;
-using api.Models;
+using Api.Services;
+using Domain.Models;
 
-namespace api.Endpoints;
+namespace Api.Endpoints;
 
 public static class VendorEndpoints
 {
     public static void MapVendorEndpoints(this WebApplication app)
     {
-        var vendorGroup = app.MapGroup("/api/vendor");
+        var vendorGroup = app.MapGroup("/Api/vendor");
 
         vendorGroup.MapGet("", async (VendorService service) =>
             Results.Ok(await service.GetAll()));

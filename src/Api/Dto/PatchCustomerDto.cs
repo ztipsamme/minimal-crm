@@ -1,6 +1,6 @@
 using System;
 
-namespace api.Dto
+namespace Api.Dto
 {
     public class PatchCustomerDto : PatchUserDto
     {

@@ -1,7 +1,7 @@
 using System;
-using api.Enums;
+using Api.Enums;
 
-namespace api.Dto
+namespace Api.Dto
 {
     public class BaseQueryParameters
     {

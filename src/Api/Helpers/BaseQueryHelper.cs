@@ -1,9 +1,9 @@
 using System;
 using System.Linq.Expressions;
-using api.Dto;
+using Api.Dto;
 using Microsoft.Azure.Cosmos;
 
-namespace api.Helpers
+namespace Api.Helpers
 {
     public abstract class BaseQueryHelper<TEntity, TQueryParams>
         where TEntity : class

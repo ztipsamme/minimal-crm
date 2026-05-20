@@ -1,7 +1,7 @@
 using System;
-using api.Dto;
+using Api.Dto;
 
-namespace api.Dto
+namespace Api.Dto
 {
     public class CustomerQueryParams : BaseQueryParameters
     {

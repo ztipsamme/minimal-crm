@@ -1,11 +1,11 @@
 using System;
 using System.Linq.Expressions;
-using api.Dto;
-using api.Enums;
-using api.Models;
+using Api.Dto;
+using Api.Enums;
+using Domain.Models;
 using Microsoft.Azure.Cosmos;
 
-namespace api.Helpers
+namespace Api.Helpers
 {
     public class CustomerQueryHelper
         : BaseQueryHelper<Customer, CustomerQueryParams>

@@ -1,8 +1,8 @@
 using System;
-using api.Models;
+using Domain.Models;
 using Microsoft.Azure.Cosmos;
 
-namespace api.Services;
+namespace Api.Services;
 
 public class VendorService
 {

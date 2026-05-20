@@ -1,7 +1,7 @@
 using System;
 using Newtonsoft.Json;
 
-namespace api.Models;
+namespace Domain.Models;
 
 public abstract class BaseModel
 {

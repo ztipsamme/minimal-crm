@@ -1,7 +1,7 @@
 using System;
 using Microsoft.Azure.Cosmos;
 
-namespace api.Services;
+namespace Api.Services;
 
 public class CosmosService
 {
