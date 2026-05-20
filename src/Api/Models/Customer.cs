@@ -9,7 +9,7 @@ public class Customer : User
     public string Title { get; set; } = null!;
 
     [JsonProperty("address")]
-    public Adress Address { get; set; } = null!;
+    public Address Address { get; set; } = null!;
 
     [JsonProperty("vendorId")]
     public string VendorId { get; set; } = null!;

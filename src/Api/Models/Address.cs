@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace api.Models;
 
-public class Adress
+public class Address
 {
     [JsonProperty("street")]
     public string Street { get; set; } = null!;

@@ -1,7 +1,6 @@
 using System;
 using System.Linq.Expressions;
 using api.Dto;
-using api.Enums;
 using Microsoft.Azure.Cosmos;
 
 namespace api.Helpers

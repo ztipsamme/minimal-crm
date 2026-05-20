@@ -53,4 +53,70 @@ public class CustomerService
             return null;
         }
     }
+
+    public async Task<Customer?> ChangeVendor(CustomerChangeVendorDto newVendor, string oldVendorId, string id)
+    {
+        try
+        {
+            var customer = await GetById(oldVendorId, id);
+            if (customer is null) return null;
+
+            customer.VendorId = newVendor.NewVendorId;
+            customer.UpdatedAt = DateTime.UtcNow;
+
+            var response = await _container.CreateItemAsync(customer, new PartitionKey(newVendor.NewVendorId));
+
+            await Delete(oldVendorId, id);
+
+            return response.Resource;
+        }
+        catch (CosmosException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
+        {
+            return null;
+        }
+    }
+
+    public async Task<Customer?> Patch(PatchCustomerDto patched, string vendorId, string id)
+    {
+        try
+        {
+            var customer = await GetById(vendorId, id);
+            if (customer is null) return null;
+
+            var patchOperations = PatchBuilder.From(patched);
+
+            var response = await _container.PatchItemAsync<Customer>(
+                id,
+                new PartitionKey(vendorId),
+                patchOperations
+            );
+
+            return response.Resource;
+        }
+        catch (CosmosException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
+        {
+            return null;
+        }
+    }
+
+    public async Task<bool> Delete(string vendorId, string id)
+    {
+        try
+        {
+            var customer = await GetById(vendorId, id);
+            if (customer is null) return false;
+
+            var response = await _container.DeleteItemAsync<Customer>(
+                id,
+                new PartitionKey(vendorId)
+            );
+
+            return true;
+        }
+        catch (CosmosException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
+        {
+            return false;
+        }
+    }
+
 }

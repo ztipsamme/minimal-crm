@@ -28,5 +28,25 @@ public static class CustomerEndpoints
             var created = await service.Create(newCustomer);
             return Results.Ok(created);
         });
+
+        customerGroup.MapPost("{oldVendorId}/{id}/change-vendor", async (CustomerService service, CustomerChangeVendorDto newVendor, string oldVendorId, string id) =>
+        {
+            var created = await service.ChangeVendor(newVendor, oldVendorId, id);
+            return Results.Ok(created);
+        });
+
+        customerGroup.MapPatch("{vendorId}/{id}", async (CustomerService service, PatchCustomerDto updatedCustomer, string vendorId, string id) =>
+        {
+            var patched = await service.Patch(updatedCustomer, vendorId, id);
+            return patched is null ? Results.NotFound() : Results.Ok(patched);
+
+        });
+
+        customerGroup.MapDelete("{vendorId}/{id}", async (CustomerService service, string vendorId, string id) =>
+        {
+            var deleted = await service.Delete(vendorId, id);
+            return deleted ? Results.NoContent() : Results.NotFound();
+        });
+
     }
 }
