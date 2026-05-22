@@ -16,5 +16,4 @@ public class Address
 
     [JsonProperty("country")]
     public string Country { get; set; } = null!;
-
 }

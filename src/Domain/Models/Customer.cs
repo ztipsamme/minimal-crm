@@ -1,20 +1,18 @@
 using System;
-using Newtonsoft.Json;
 
 namespace Domain.Models;
 
 public class Customer : User
 {
-    [JsonProperty("title")]
-    public string Title { get; set; } = null!;
+    public Customer(string name, string phoneNumber, string email, string title, Address address, string vendorId)
+    {
+        Name = name;
+        PhoneNumber = phoneNumber;
+        Email = email;
+        Title = title;
+        Address = address;
+        VendorId = vendorId;
 
-    [JsonProperty("address")]
-    public Address Address { get; set; } = null!;
-
-
-    [JsonProperty("vendorId")]
-    public string VendorId { get; set; } = null!;
-
-    [JsonProperty("vendorEmail")]
-    public string VendorEmail { get; set; } = null!;
+        Role = "customer";
+    }
 }

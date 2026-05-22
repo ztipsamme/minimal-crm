@@ -3,8 +3,13 @@ using Api.Enums;
 
 namespace Api.Dto
 {
-    public class BaseQueryParameters
+    public class UserQueryParams
     {
+        public string? Name { get; set; }
+        public string? Title { get; set; }
+        public string? Role { get; set; }
+        public string? VendorId { get; set; }
+
         public int? Page { get; set; }
         public int? Limit { get; set; }
         public bool? Descending { get; set; }
