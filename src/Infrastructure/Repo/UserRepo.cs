@@ -1,17 +1,19 @@
 using System;
-using Api.Dto;
-using Api.Helpers;
+using Application.Contracts;
+using Application.Interfaces;
+using Infrastructure.Helpers;
+using Infrastructure.Services;
 using Microsoft.Azure.Cosmos;
 using User = Domain.Models.User;
 
-namespace Api.Services
+namespace Infrastructure.Repo
 {
-    public class UserService
+    public class UserRepo : IUserRepo
     {
         private readonly Container _container;
         private readonly UserQueryHelper _queryHelper;
 
-        public UserService(CosmosService cosmos, UserQueryHelper queryHelper)
+        public UserRepo(CosmosService cosmos, UserQueryHelper queryHelper)
         {
             _container = cosmos.GetContainer("users");
             _queryHelper = queryHelper;
@@ -27,9 +29,9 @@ namespace Api.Services
             try
             {
                 var response = await _container.ReadItemAsync<User>(
-                    id,
-                    new PartitionKey(vendorId)
-                );
+                         id,
+                         new PartitionKey(vendorId)
+                     );
 
                 return response.Resource;
             }
@@ -89,10 +91,10 @@ namespace Api.Services
         {
             try
             {
-                var response = await _container.DeleteItemAsync<User>(
-                   id,
-                   new PartitionKey(vendorId)
-               );
+                await _container.DeleteItemAsync<User>(
+                      id,
+                      new PartitionKey(vendorId)
+                  );
 
                 return true;
             }

@@ -1,4 +1,4 @@
-namespace Api.Enums
+namespace Application.Enums
 {
     public enum OrderBy
     {

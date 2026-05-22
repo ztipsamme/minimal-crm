@@ -1,7 +1,7 @@
 using System;
-using Api.Enums;
+using Application.Enums;
 
-namespace Api.Dto
+namespace Application.Contracts
 {
     public class UserQueryParams
     {

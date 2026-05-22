@@ -1,11 +1,11 @@
 using System;
 using System.Linq.Expressions;
-using Api.Dto;
-using Api.Enums;
+using Application.Contracts;
+using Application.Enums;
 using Microsoft.Azure.Cosmos;
 using User = Domain.Models.User;
 
-namespace Api.Helpers
+namespace Infrastructure.Helpers
 {
     public class UserQueryHelper
     {

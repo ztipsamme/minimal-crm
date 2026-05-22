@@ -6,11 +6,13 @@ public class Vendor : User
 {
     public Vendor(string name, string phoneNumber, string email)
     {
+
         Name = name;
         PhoneNumber = phoneNumber;
         Email = email;
 
         Role = "vendor";
-        VendorId = Guid.NewGuid().ToString();
+        Id = Guid.NewGuid().ToString();
+        VendorId = Id;
     }
 }

@@ -1,6 +1,6 @@
 using System;
 
-namespace Api.Dto
+namespace Application.Contracts
 {
     public class PatchUserDto
     {

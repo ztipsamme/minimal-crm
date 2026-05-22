@@ -1,6 +1,7 @@
 using System;
 using Api.Dto;
-using Api.Services;
+using Application.Contracts;
+using Application.Services;
 using Domain.Models;
 
 namespace Api.Endpoints

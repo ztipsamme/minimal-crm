@@ -483,3 +483,4 @@ $RECYCLE.BIN/
 
 .DS_Store
 local.settings.json
+appsettings.Development.json
