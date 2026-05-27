@@ -6,7 +6,7 @@ namespace Application.Contracts
     {
         public string FromEmail { get; set; } = default!;
         public string FromName { get; set; } = default!;
-        public string SendGridApiKey { get; set; } = default!;
+        public string ApiKey { get; set; } = default!;
         public bool UseEuRegion { get; set; }
     }
 }

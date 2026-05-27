@@ -3,21 +3,24 @@ using Application.Contracts;
 using Microsoft.Extensions.Options;
 using SendGrid;
 using SendGrid.Helpers.Mail;
+using Microsoft.Extensions.Logging;
 
 namespace Infrastructure.Services
 {
     public class EmailService
     {
+        private readonly ILogger<EmailService> _logger;
         private readonly EmailOptions _options;
         private readonly SendGridClient _client;
 
-        public EmailService(IOptions<EmailOptions> options)
+        public EmailService(ILogger<EmailService> logger, IOptions<EmailOptions> options)
         {
+            _logger = logger;
             _options = options.Value;
 
             var clientOptions = new SendGridClientOptions
             {
-                ApiKey = _options.SendGridApiKey
+                ApiKey = _options.ApiKey
             };
 
             if (_options.UseEuRegion)
@@ -33,6 +36,9 @@ namespace Infrastructure.Services
             string? htmlBody = null)
         {
             var from = new EmailAddress(_options.FromEmail, _options.FromName);
+
+            _logger.LogInformation("From:" + _options.FromEmail);
+
 
             var msg = MailHelper.CreateSingleEmail(
                 from,
