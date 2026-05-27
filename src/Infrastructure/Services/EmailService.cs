@@ -1,4 +1,5 @@
 using System;
+using Application.Contracts;
 using Microsoft.Extensions.Options;
 using SendGrid;
 using SendGrid.Helpers.Mail;
@@ -20,9 +21,7 @@ namespace Infrastructure.Services
             };
 
             if (_options.UseEuRegion)
-            {
                 clientOptions.SetDataResidency("eu");
-            }
 
             _client = new SendGridClient(clientOptions);
         }
@@ -33,7 +32,7 @@ namespace Infrastructure.Services
             string textBody,
             string? htmlBody = null)
         {
-            var from = new EmailAddress("e.spitz@hotmail.com", "Emma API");
+            var from = new EmailAddress(_options.FromEmail, _options.FromName);
 
             var msg = MailHelper.CreateSingleEmail(
                 from,
@@ -53,14 +52,5 @@ namespace Infrastructure.Services
                 );
             }
         }
-    }
-
-
-    public class EmailOptions
-    {
-        public string FromEmail { get; set; } = default!;
-        public string FromName { get; set; } = default!;
-        public string SendGridApiKey { get; set; } = default!;
-        public bool UseEuRegion { get; set; }
     }
 }

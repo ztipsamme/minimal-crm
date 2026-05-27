@@ -12,7 +12,7 @@ public class CosmosService
     public CosmosService(IConfiguration config)
     {
         _client = new CosmosClient(
-            config["Cosmos:ConnectionString"]);
+            config["ConnectionString"]);
         _database = _client.GetDatabase("minimalcrm");
 
     }

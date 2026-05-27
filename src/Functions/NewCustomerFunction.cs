@@ -21,13 +21,14 @@ public class NewCustomerFunction
         _userService = userService;
     }
 
-    [Function("EmailTrigger")]
+    [Function("NewCustomerEmailTrigger")]
     public async Task Run([CosmosDBTrigger(
         databaseName: "minimalcrm",
         containerName: "users",
-        Connection = "Cosmos:ConnectionString",
-        LeaseContainerName = "leases",
-        CreateLeaseContainerIfNotExists = true)] IReadOnlyList<Customer> input)
+        Connection = "ConnectionString",
+        LeaseContainerName = "leases_dev",
+        CreateLeaseContainerIfNotExists = true)] 
+        IReadOnlyList<Customer> input)
     {
         if (input != null && input.Count > 0)
         {

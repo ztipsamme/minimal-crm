@@ -3,6 +3,7 @@ using Api.Dto;
 using Application.Contracts;
 using Application.Services;
 using Domain.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Endpoints
 {
@@ -25,40 +26,55 @@ namespace Api.Endpoints
             return app;
         }
 
-        public static async Task<IResult> GetAll(UserService service, [AsParameters] UserQueryParams queryParams)
+        public static async Task<IResult> GetAll(
+            [FromServices] UserService service,
+            [AsParameters] UserQueryParams queryParams)
         {
             var users = await service.GetAll(queryParams);
             return Results.Ok(users);
         }
 
 
-        public static async Task<IResult> GetById(UserService service, string vendorId, string id)
+        public static async Task<IResult> GetById(
+            [FromServices] UserService service,
+            string vendorId,
+            string id)
         {
             var users = await service.GetById(vendorId, id);
             return users is null ? Results.NotFound() : Results.Ok(users);
         }
 
-        public static async Task<IResult> CreateCustomer(UserService service, CustomerDto dto)
+        public static async Task<IResult> CreateCustomer(
+            [FromServices] UserService service,
+            CustomerDto dto)
         {
             var user = new Customer(dto.Name, dto.PhoneNumber, dto.Email, dto.Title, dto.Address, dto.VendorId);
 
             return Results.Ok(await service.Create(user));
         }
 
-        public static async Task<IResult> CreateVendor(UserService service, VendorDto dto)
+        public static async Task<IResult> CreateVendor(
+            [FromServices] UserService service,
+            VendorDto dto)
         {
             var user = new Vendor(dto.Name, dto.PhoneNumber, dto.Email);
 
             return Results.Ok(await service.Create(user));
         }
 
-        public static async Task<IResult> Patch(UserService service, PatchUserDto dto, string vendorId, string id)
+        public static async Task<IResult> Patch(
+            [FromServices] UserService service,
+            PatchUserDto dto, string vendorId,
+            string id)
         {
             var patched = await service.Patch(dto, vendorId, id);
             return patched is null ? Results.NotFound() : Results.Ok(patched);
         }
 
-        public static async Task<IResult> Delete(UserService service, string vendorId, string id)
+        public static async Task<IResult> Delete(
+            [FromServices] UserService service,
+            string vendorId,
+            string id)
         {
             var deleted = await service.Delete(vendorId, id);
             return deleted ? Results.NoContent() : Results.NotFound();
