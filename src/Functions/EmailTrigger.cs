@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Application.Services;
 using Domain.Models;
+using Infrastructure.Helpers;
 using Infrastructure.Services;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
@@ -37,64 +38,28 @@ public class EmailTrigger
 
             foreach (var user in input)
             {
+                var isNew = Math.Abs((user.UpdatedAt - user.CreatedAt).TotalMilliseconds) < 10;
+
                 if (user.Role != "customer")
                     continue;
 
                 var vendor = await _userService.GetById(user.VendorId, user.VendorId);
-                if (vendor is null) return;
-
-                var subject = "New customer assigned";
-                var textBody = $"You have a new customer";
-
-                var htmlBody = @$"
-                <p>Hello {vendor.Name},</p>
-
-                <p>You have a new customer:</p>
-
-                <table style='border-collapse: collapse;'>
-                    <tr>
-                        <td><b>Name</b></td>
-                        <td>{user.Name}</td>
-                    </tr>
-                    <tr>
-                        <td><b>Email</b></td>
-                        <td>{user.Email}</td>
-                    </tr>
-                    <tr>
-                        <td><b>Phone</b></td>
-                        <td>{user.PhoneNumber}</td>
-                    </tr>
-                </table>
-
-                <table style='border-collapse: collapse;'>
-                    <caption style='text-align: left;'><b>Address</b>></caption>
-                    <tr>
-                        <td><b>Street</b></td>
-                        <td>{user.Address.Street}</td>
-                    </tr>
-                    <tr>
-                        <td><b>City</b></td>
-                        <td>{user.Address.City}</td>
-                    </tr>
-                    <tr>
-                        <td><b>Postal code</b></td>
-                        <td>{user.Address.PostalCode}</td>
-                    </tr>
-                    <tr>
-                        <td><b>Country</b></td>
-                        <td>{user.Address.Country}</td>
-                    </tr>
-                </table>
-                ";
+                if (vendor is null)
+                {
+                    _logger.LogWarning($"Vendor not found for VendorId: {user.VendorId}");
+                    return;
+                }
 
                 var to = new EmailAddress(vendor.Email, vendor.Name);
+                var email = EmailBuilder.Build(isNew, vendor, user);
 
                 await _emailService.SendEmail(
                     to,
-                    subject,
-                    textBody,
-                    htmlBody
+                    email.subject,
+                    email.textBody,
+                    email.htmlBody
                 );
+
                 _logger.LogInformation("To:" + vendor.Email);
             }
 
