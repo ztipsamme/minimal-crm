@@ -25,6 +25,10 @@ namespace Infrastructure.Helpers
                         <td>{user.Name}</td>
                     </tr>
                     <tr>
+                        <td><b>Title</b></td>
+                        <td>{user.Title}</td>
+                    </tr>
+                    <tr>
                         <td><b>Email</b></td>
                         <td>{user.Email}</td>
                     </tr>

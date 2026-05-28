@@ -38,6 +38,8 @@ public class EmailTrigger
 
             foreach (var user in input)
             {
+                // "New" if CreatedAt and UpdatedAt are almost identical.
+                // Small timestamp differences can occur in Cosmos DB.
                 var isNew = Math.Abs((user.UpdatedAt - user.CreatedAt).TotalMilliseconds) < 10;
 
                 if (user.Role != "customer")
